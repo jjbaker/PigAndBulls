@@ -1,8 +1,8 @@
 short term
--implement winning
--implement new game
 -CSS
 -implement messages if word is not accepted
+-'enter' submits word
+-refactor code ->consider use of state
 
 long term
 -check against scrabble dictionary

@@ -4,13 +4,13 @@ export default function Rules(){
   return (
     <div className="rules">
       <p>Each player submits a 5 letter word without any duplicate letters that is not a proper noun. Players then guess their opponents word using 5 letter words without duplicate letters(can be proper nouns). One Bull is scored whenever a letter in the guess is in the same spot as the opponents word. One Pig is scored whenever a letter in the guess is in the opponent's word, but in a different location. Examples are:</p>
-      <table>
+      <table className="rules--table">
         <tbody>
           <tr>
-            <td>Word</td>
-            <td>Guess</td>
-            <td>Pigs</td>
-            <td>Bulls</td>
+            <th>Word</th>
+            <th>Guess</th>
+            <th>Pigs</th>
+            <th>Bulls</th>
           </tr>
           <tr>
             <td>freak</td>

@@ -17,6 +17,9 @@ html,body{
   color: white;
   height: 50px;
 }
+.center{
+  text-align: center;
+}
 .player--box{
 margin: 5px;
   border-radius: 10px;
@@ -57,6 +60,9 @@ td input{
 .rules{
   color: white;
 }
+.center button{
+  border: medium white solid
+}
 
 
 /* CSS */
@@ -65,7 +71,7 @@ td input{
   border-radius: 4px;
   border-style: none;
   box-sizing: border-box;
-  color: #fff;
+  color: white;
   cursor: pointer;
   display: inline;
   font-size: 16px;
@@ -85,5 +91,19 @@ td input{
 .button-31:focus {
   opacity: .75;
 }
+.table--won tr:nth-child(2) td:first-child,
+.table--won tr:nth-child(2) td:last-child{
+  background-color:  green;
+}
+.rules--table td{
+  padding: 8px;
+  border: 1px solid white
+}
+
+.rules--table th{
+  padding: 8px;
+  border: 1px solid white}
+
+
 
 
