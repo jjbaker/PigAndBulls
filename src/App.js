@@ -8,6 +8,7 @@ import "./style.css";
 
 export default function App() {
   const [players, setPlayers] = React.useState(createPlayers());
+  const [pTurn,setPTurn] = React.useState(0)
   const [canGuess, setCanGuess] = React.useState(false);
   function createPlayers() {
     const newPlayers = [];
@@ -15,7 +16,7 @@ export default function App() {
       newPlayers.push({
         word: "",
         guess: "",
-        id: nanoid(),
+        id: i,
         guesses: {},
       });
     }
@@ -36,13 +37,19 @@ export default function App() {
     if (/(.).*\1/.test(word)) {
       return false;
     }
+    if(!/^[a-zA-Z]+$/.test(word)){
+      return false
+    }
     return true;
   }
 
   function submitWord(id) {
     const word = players.find((p) => p.id == id).word.toLowerCase();
     if (validateWord(word)) {
-      setCanGuess(true);
+      setPTurn(oldTurn => 1-oldTurn)
+      if(pTurn==1){
+        setCanGuess(true)
+      }
     }
   }
 
@@ -60,8 +67,14 @@ export default function App() {
   }
 
   function submitGuess(id) {
-    const word = players.find((p) => p.id == id).guess.toLowerCase();
+    const play = players.find((p) => p.id == id);
+    const word = play.guess.toLowerCase();
+    
     if (validateWord(word)) {
+      if(word in play.guesses){
+        return
+      }
+      setPTurn(oldTurn => 1-oldTurn)
       const pigsBulls = countPBs(
         players.find((p) => p.id != id).word.toLowerCase(),
         word
@@ -71,7 +84,7 @@ export default function App() {
           return player.id == id
             ? {
                 ...player,
-                guesses: { ...player.guesses, [word]: pigsBulls },
+                guesses: {[word]: pigsBulls, ...player.guesses},
                 guess: "",
               }
             : player;
@@ -84,12 +97,15 @@ export default function App() {
       <Word
         key={p.id}
         id={p.id}
+        pTurn={pTurn}
+        canGuess={canGuess}
         word={p.word}
         submitWord={submitWord}
         setWord={setWord}
       />
       {canGuess && (
         <Guess
+          pTurn={pTurn}
           id={p.id}
           guesses={p.guesses}
           guess={p.guess}

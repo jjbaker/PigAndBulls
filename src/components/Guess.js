@@ -11,21 +11,37 @@ export default function Guess(props){
   const guesses = props.guesses;
   const guessBox = [];
   for(const prop in guesses){
-    guessBox.push(<div><input key={prop} type="text" readOnly={true} value={prop} />{guesses[prop][0]}{guesses[prop][1]}</div>)
+    guessBox.push(<tr><td><input key={prop} type="text" readOnly={true} value={prop} /></td><td>{guesses[prop][0]}</td><td>{guesses[prop][1]}</td></tr>)
   } 
 
  
   
   return (
     <div className="guess">
-      {guessBox}
-      <input type="text" 
+      <table>
+        <tbody>
+          <tr>
+            <td>
+      {props.pTurn==props.id && <input type="text" 
         value={props.guess} 
         maxLength="5"
         onKeyPress={event => lettersOnly(event)}  
         onChange={(event) =>props.setWord("guess",event.target.value, props.id)}
-      />
-      <button type="button"  onClick={() => props.submitGuess(props.id)}>Submit</button>
+        autofocus
+      />}
+      </td><td colSpan="2">
+      {props.pTurn==props.id && <button type="button"  onClick={() => props.submitGuess(props.id)}>Guess</button>}
+      </td>
+      </tr>
+      <tr>
+        <td>Guess</td>
+        <td>Pigs</td>
+        <td>Bulls</td>
+        </tr>
+    
+          {guessBox}
+          </tbody>
+      </table>
     </div>
   )
 }

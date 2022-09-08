@@ -9,13 +9,15 @@ export default function Word(props) {
   }
   return (
     <div className="guess">
-      <input type="text" 
+      <h1>Player {props.id+1}</h1>
+      {(props.pTurn==props.id && !props.canGuess) && (<div><input type="text" 
         value={props.word} 
         maxlength="5" 
         onKeyPress={event => lettersOnly(event)} 
         onChange={(event) =>props.setWord("word",event.target.value, props.id)}  
+        autofocus
       />
-      <button type="button" onClick={() => props.submitWord(props.id)}>Submit</button>
+      <button type="button" onClick={() => props.submitWord(props.id)}>Submit</button></div>)}
     </div>
   )
 }
