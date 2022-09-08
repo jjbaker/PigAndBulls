@@ -14,34 +14,39 @@ export default function Guess(props){
     guessBox.push(<tr><td><input key={prop} type="text" readOnly={true} value={prop} /></td><td>{guesses[prop][0]}</td><td>{guesses[prop][1]}</td></tr>)
   } 
 
+  const styles={
+    visibility: props.pTurn==props.id ? "visible" : "hidden"
+  }
  
   
   return (
     <div className="guess">
-      <table>
-        <tbody>
-          <tr>
-            <td>
-      {props.pTurn==props.id && <input type="text" 
+      
+          
+      <input type="text" 
         value={props.guess} 
         maxLength="5"
+        style={styles}
         onKeyPress={event => lettersOnly(event)}  
         onChange={(event) =>props.setWord("guess",event.target.value, props.id)}
-        autofocus
-      />}
-      </td><td colSpan="2">
-      {props.pTurn==props.id && <button type="button"  onClick={() => props.submitGuess(props.id)}>Guess</button>}
-      </td>
-      </tr>
+        //autoFocus
+      />
+    
+      {props.pTurn==props.id && <button className="button-31" type="button"  onClick={() => props.submitGuess(props.id)}>Guess</button>}
+      
+     
+      {Object.keys(props.guesses).length!=0 &&<table>
+        <tbody>
+      
       <tr>
-        <td>Guess</td>
-        <td>Pigs</td>
-        <td>Bulls</td>
+        <th>Guess</th>
+        <th>Pigs</th>
+        <th>Bulls</th>
         </tr>
     
           {guessBox}
           </tbody>
-      </table>
+      </table>}
     </div>
   )
 }

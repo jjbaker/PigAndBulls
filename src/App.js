@@ -3,13 +3,14 @@ import Header from "./components/Header.js";
 import Split from "react-split";
 import Word from "./components/Word.js";
 import Guess from "./components/Guess.js";
-import { nanoid } from "nanoid";
+import Rules from "./components/Rules.js"
 import "./style.css";
 
 export default function App() {
   const [players, setPlayers] = React.useState(createPlayers());
   const [pTurn,setPTurn] = React.useState(0)
   const [canGuess, setCanGuess] = React.useState(false);
+
   function createPlayers() {
     const newPlayers = [];
     for (let i = 0; i < 2; i++) {
@@ -18,6 +19,7 @@ export default function App() {
         guess: "",
         id: i,
         guesses: {},
+        won: false
       });
     }
     return newPlayers;
@@ -74,7 +76,7 @@ export default function App() {
       if(word in play.guesses){
         return
       }
-      setPTurn(oldTurn => 1-oldTurn)
+      
       const pigsBulls = countPBs(
         players.find((p) => p.id != id).word.toLowerCase(),
         word
@@ -86,14 +88,22 @@ export default function App() {
                 ...player,
                 guesses: {[word]: pigsBulls, ...player.guesses},
                 guess: "",
+                won: pigsBulls[1]===5,
               }
             : player;
         })
       );
+
+      if(!players[1-id].won){
+        setPTurn(oldTurn => 1-oldTurn)
+      }
+      else if(pigsBulls[1]===5){
+        setPTurn(2)
+      }
     }
   }
   const words = players.map((p) => (
-    <div>
+    <div className="player--box" style={p.id===pTurn ? {border: "medium solid white"} : {border: "none"}}>
       <Word
         key={p.id}
         id={p.id}
@@ -121,11 +131,12 @@ export default function App() {
     setCanGuess(true);
   },[])*/
   return (
-    <div>
+    <div className="game">
       <Header />
       <Split sizes={[50, 50]} className="split">
         {words}
       </Split>
+      <Rules />
     </div>
   );
 }

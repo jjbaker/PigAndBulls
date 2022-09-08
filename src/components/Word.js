@@ -8,18 +8,19 @@ export default function Word(props) {
     }
   }
   return (
-    <div className="guess">
-      <h1>Player {props.id+1}</h1>
+    <div className="word">
+      <h2>Player {props.id+1}</h2>
       {(props.pTurn==props.id && !props.canGuess) && (<div><input type="text" 
         value={props.word} 
         maxlength="5" 
         onKeyPress={event => lettersOnly(event)} 
         onChange={(event) =>props.setWord("word",event.target.value, props.id)}  
-        autofocus
+        //autoFocus
       />
-      <button type="button" onClick={() => props.submitWord(props.id)}>Submit</button></div>)}
+      <button className="button-31" type="button" onClick={() => props.submitWord(props.id)}>Set Word</button></div>)}
     </div>
   )
 }
 
 //(event) => /[a-z]/i.test(event.key)
+

@@ -2,7 +2,9 @@ short term
 -implement winning
 -implement new game
 -CSS
+-implement messages if word is not accepted
 
 long term
 -check against scrabble dictionary
 -save locally?
+-non-local play
