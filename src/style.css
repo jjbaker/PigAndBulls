@@ -10,10 +10,11 @@ html,body{
   min-height: 400px;
   margin-top: 10px;
 }
+.h2--victory{
+  color: green
+}
 .header{
   text-align: center;
-  /*box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;*/
-
   color: white;
   height: 50px;
 }
@@ -21,17 +22,16 @@ html,body{
   text-align: center;
 }
 .player--box{
-margin: 5px;
+  margin: 5px;
   border-radius: 10px;
   background-color: #303036;
   min-height: 25%;
   text-align: center;
-}
-h2,h3{
   color:white;
-  text-align: center;
 }
-
+.h2--victory{
+  color: green
+}
 input{
   font-size: 18px;
   width: 140px;
@@ -40,11 +40,25 @@ input{
   border-radius: 5px;
   font-family: 'Arial', sans-serif;
 }
+.rel {
+  position: relative;
+
+}
+.warning{
+  position: absolute;
+  bottom:-42px;
+  text-align: center;
+  width: 100%
+}
 table{
   margin-left: auto;
   margin-right: auto;
   margin-top: 15px;
   color: white;
+}
+.table--won tr:nth-child(2) td:first-child,
+.table--won tr:nth-child(2) td:last-child{
+  background-color:  green;
 }
 th{
   font-size: 18px;
@@ -62,23 +76,19 @@ td input{
 .rules{
   color: white;
 }
+.rules--table td{
+  padding: 8px;
+  border: 1px solid white
+}
+.rules--table th{
+  padding: 8px;
+  border: 1px solid white}
 .center button{
-  border: thick white solid
-}
-.warning{
-  position: absolute;
-  color: white;
-  bottom:-42px;
-text-align: center;
-width: 100%
-}
-.rel {
-  position: relative;
- 
+  border: thick green solid
 }
 
 
-/* CSS */
+/* From CSS Scan */
 .button-31 {
   background-color: #222;
   border-radius: 4px;
@@ -99,23 +109,11 @@ width: 100%
   touch-action: manipulation;
 
 }
-
 .button-31:hover,
 .button-31:focus {
   opacity: .75;
 }
-.table--won tr:nth-child(2) td:first-child,
-.table--won tr:nth-child(2) td:last-child{
-  background-color:  green;
-}
-.rules--table td{
-  padding: 8px;
-  border: 1px solid white
-}
 
-.rules--table th{
-  padding: 8px;
-  border: 1px solid white}
 
 
 

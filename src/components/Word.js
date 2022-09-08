@@ -5,19 +5,24 @@ export default function Word(props) {
     const char = event.charCode;
     if (!(char >= 65 && char <= 90) && !(char >= 97 && char <= 122)) {
       event.preventDefault();
-      if(char==13){
-        props.submitWord(props.id)
+      if (char == 13) {
+        props.submitWord(props.id);
       }
     }
   }
+  
   return (
     <div className="word">
       <h2>Player {props.id + 1}</h2>
-      {props.msg && <h2>{props.msg}</h2>}
+      {props.msg && <h2 className="h2--victory">{props.msg}</h2>}
       {props.pTurn == props.id && !props.canGuess && (
         <div className="rel">
-          <h3>Enter a 5 letter word that is not a proper noun with no duplicate letters.</h3>
+          <h3>
+            Enter a 5 letter word with no duplicate letters that is not a proper
+            noun.
+          </h3>
           <input
+            id="focus"
             type="text"
             value={props.word}
             maxLength="5"
@@ -25,7 +30,7 @@ export default function Word(props) {
             onChange={(event) =>
               props.setWord("word", event.target.value, props.id)
             }
-            //autoFocus
+            autoFocus
           />
           <button
             className="button-31"
@@ -34,11 +39,11 @@ export default function Word(props) {
           >
             Set Word
           </button>
-        
-      
-      <h5 className="warning">{props.error}</h5></div>)}
+
+          <h5 className="warning">{props.error}</h5>
+        </div>
+      )}
     </div>
   );
 }
 
-//(event) => /[a-z]/i.test(event.key)

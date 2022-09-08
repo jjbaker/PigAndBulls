@@ -11,8 +11,10 @@ export default function App() {
   const [pTurn, setPTurn] = React.useState(0);
   const [canGuess, setCanGuess] = React.useState(false);
   const [newGame, setNewGame] = React.useState(false);
-  const [errorMsg, setErrorMsg]=React.useState("");
-  function createPlayers() {
+  const [errorMsg, setErrorMsg] = React.useState("");
+
+  //Creates player objects to setup initial state
+  function createPlayers() {  
     const newPlayers = [];
     for (let i = 0; i < 2; i++) {
       newPlayers.push({
@@ -21,38 +23,42 @@ export default function App() {
         id: i,
         guesses: {},
         won: false,
-        victoryM:""
+        victoryM: "",
       });
     }
     return newPlayers;
   }
 
-  function setWord(key, word, id) {
+  //updates state for players' word and guesses
+  function setWord(key, word, id) { 
     setPlayers((oldPlayers) =>
-      oldPlayers.map((player) => {
-        return player.id == id ? { ...player, [key]: word } : player;
+      oldPlayers.map((p) => {
+        return p.id == id ? { ...p, [key]: word } : p;
       })
     );
   }
-  function validateWord(word) {
-    if (word.length != 5) {
-      setErrorMsg("Must be 5 letters")
+
+  //makes sure word follows rules
+  function validateWord(word) { 
+    if (word.length != 5) { 
+      setErrorMsg("Must be 5 letters");
       return false;
     }
-    if (!/^[a-zA-Z]+$/.test(word)) {
-      setErrorMsg("Only letters allowed")
+    if (!/^[a-zA-Z]+$/.test(word)) { 
+      setErrorMsg("Only letters allowed");
       return false;
     }
-    if (/(.).*\1/.test(word)) {
-      setErrorMsg("No duplicate letters")
+    if (/(.).*\1/.test(word)) { 
+      setErrorMsg("No duplicate letters");
       return false;
     }
-    setErrorMsg("")
+    setErrorMsg("");
     return true;
   }
 
+  //sets player word - starts guessing when both players set their word
   function submitWord(id) {
-    const word = players.find((p) => p.id == id).word.toLowerCase();
+    const word = players[id].word.toLowerCase();
     if (validateWord(word)) {
       setPTurn((oldTurn) => 1 - oldTurn);
       if (pTurn == 1) {
@@ -61,6 +67,7 @@ export default function App() {
     }
   }
 
+  //counts pigs and bulls
   function countPBs(word, guess) {
     let pigs = 0;
     let bulls = 0;
@@ -74,46 +81,76 @@ export default function App() {
     return [pigs, bulls];
   }
 
+  //handles player guesses
   function submitGuess(id) {
-    const play = players.find((p) => p.id == id);
-    const word = play.guess.toLowerCase();
+    const player = players[id];
+    const opponent = players[1-id];
+    const guess = player.guess.toLowerCase();
 
-    if (validateWord(word)) {
-      if (word in play.guesses) {
+    if (validateWord(guess)) {
+      if (guess in player.guesses) {
+        setErrorMsg("Already guessed that");
         return;
       }
 
-      const pigsBulls = countPBs(
-        players.find((p) => p.id != id).word.toLowerCase(),
-        word
-      );
+      const pigsBulls = countPBs(opponent.word,guess);
+      
       setPlayers((oldPlayers) =>
-        oldPlayers.map((player) => {
-          return player.id == id
+        oldPlayers.map((p) => {
+          return p.id == id
             ? {
-                ...player,
-                guesses: { [word]: pigsBulls, ...player.guesses },
+                ...p,
+                guesses: { [guess]: pigsBulls, ...p.guesses },
                 guess: "",
                 won: pigsBulls[1] === 5,
               }
-            : player;
+            : p;
         })
       );
 
-      if (!players[1 - id].won) {
+      if (!opponent.won) {
         setPTurn((oldTurn) => 1 - oldTurn);
       } else if (pigsBulls[1] === 5) {
         setPTurn(2);
       }
     }
   }
+
+  //resets states for new game
   function createNewGame() {
     setPlayers(createPlayers());
     setPTurn(0);
-    setCanGuess(false)
-    setNewGame(false)
+    setCanGuess(false);
+    setNewGame(false);
   }
-  const words = players.map((p) => (
+
+  //after each guess, looks for winner and sets "win" message
+  React.useEffect(() => {
+    const winners = players.filter((p) => p.won === true).length;
+    const message = players.filter((p) => p.victoryM.length > 0).length;
+    if (winners == 2 || (winners == 1 && 
+      Object.keys(players[1].guesses).length == Object.keys(players[0].guesses).length)) {
+      if (winners == 2 && message == 0) {
+        setPlayers((oldPlayers) =>
+          oldPlayers.map((p) => {
+            return { ...p, victoryM: "Nice Job. You Tied!" };
+          })
+        );
+      } else if (message == 0) {
+        setPlayers((oldPlayers) =>
+          oldPlayers.map((p) => {
+            return {
+              ...p,
+              victoryM: p.won ? "Nice Job. You won!" : "Nice Try.",
+            };
+          })
+        );
+      }
+      setNewGame(true);
+    }
+  }, [players[0].guesses, players[1].guesses]);
+
+  const playerBoxes = players.map((p) => (
     <div
       className="player--box"
       style={
@@ -133,6 +170,7 @@ export default function App() {
       />
       {canGuess && (
         <Guess
+          key={p.id+"g"}
           error={errorMsg}
           won={p.won}
           pTurn={pTurn}
@@ -146,31 +184,20 @@ export default function App() {
     </div>
   ));
 
-  React.useEffect(()=>{
-    const winners = players.filter(p => p.won===true).length;
-    const message =  players.filter(p => p.victoryM.length>0).length;
-    if(winners==2 || (winners==1 && Object.keys(players[1].guesses).length == Object.keys(players[0].guesses).length)){
-      if(winners==2 && message==0){
-        setPlayers(oldPlayers => oldPlayers.map(p => {
-          return { ...p, victoryM:"Nice Job. You Tied!"}
-        }))
-      }
-      else if(message==0){
-        setPlayers(oldPlayers => oldPlayers.map(p => {
-          return { ...p, victoryM:p.won ? "Nice Job. You won!": "Nice Try."}
-        }))
-      }
-      setNewGame(true)
-    }
-  },[players[0].guesses,players[1].guesses])
+  
   return (
     <div className="game">
       <Header />
       <Split sizes={[50, 50]} className="split">
-        {words}
+        {playerBoxes}
       </Split>
       <div className="center">
-        {newGame && <button className="button-31" type="button" onClick={createNewGame}>New Game</button>}</div>
+        {newGame && (
+          <button className="button-31" type="button" onClick={createNewGame}>
+            New Game
+          </button>
+        )}
+      </div>
       <Rules />
     </div>
   );
