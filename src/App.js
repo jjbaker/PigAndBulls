@@ -11,6 +11,7 @@ export default function App() {
   const [pTurn, setPTurn] = React.useState(0);
   const [canGuess, setCanGuess] = React.useState(false);
   const [newGame, setNewGame] = React.useState(false);
+  const [errorMsg, setErrorMsg]=React.useState("");
   function createPlayers() {
     const newPlayers = [];
     for (let i = 0; i < 2; i++) {
@@ -35,14 +36,18 @@ export default function App() {
   }
   function validateWord(word) {
     if (word.length != 5) {
-      return false;
-    }
-    if (/(.).*\1/.test(word)) {
+      setErrorMsg("Must be 5 letters")
       return false;
     }
     if (!/^[a-zA-Z]+$/.test(word)) {
+      setErrorMsg("Only letters allowed")
       return false;
     }
+    if (/(.).*\1/.test(word)) {
+      setErrorMsg("No duplicate letters")
+      return false;
+    }
+    setErrorMsg("")
     return true;
   }
 
@@ -117,6 +122,7 @@ export default function App() {
     >
       <Word
         key={p.id}
+        error={errorMsg}
         id={p.id}
         pTurn={pTurn}
         canGuess={canGuess}
@@ -127,6 +133,7 @@ export default function App() {
       />
       {canGuess && (
         <Guess
+          error={errorMsg}
           won={p.won}
           pTurn={pTurn}
           id={p.id}

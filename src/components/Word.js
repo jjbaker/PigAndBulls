@@ -15,7 +15,7 @@ export default function Word(props) {
       <h2>Player {props.id + 1}</h2>
       {props.msg && <h2>{props.msg}</h2>}
       {props.pTurn == props.id && !props.canGuess && (
-        <div>
+        <div className="rel">
           <h3>Enter a 5 letter word that is not a proper noun with no duplicate letters.</h3>
           <input
             type="text"
@@ -34,8 +34,9 @@ export default function Word(props) {
           >
             Set Word
           </button>
-        </div>
-      )}
+        
+      
+      <h5 className="warning">{props.error}</h5></div>)}
     </div>
   );
 }

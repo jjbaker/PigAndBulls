@@ -1,8 +1,6 @@
 short term
 -CSS
--implement messages if word is not accepted
 -refactor code ->consider use of state
-fix console log warnings
 
 long term
 -check against scrabble dictionary

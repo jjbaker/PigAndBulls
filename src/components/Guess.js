@@ -17,7 +17,7 @@ export default function Guess(props) {
     guessBox.push(
       <tr>
         <td>
-          <input key={prop} type="text" readOnly={true} value={prop} />
+          <input key={prop+props.id} type="text" readOnly={true} value={prop} />
         </td>
         <td>{guesses[prop][0]}</td>
         <td>{guesses[prop][1]}</td>
@@ -33,7 +33,7 @@ export default function Guess(props) {
   return (
     <div className="guess">
       
-      {!props.won && (<div style={styles}><h3>Guess your oponents word.</h3><input
+      {!props.won && (<div className="rel" style={styles}><h3>Guess your oponents word.</h3><input
         type="text"
         value={props.guess}
         maxLength="5"
@@ -49,7 +49,8 @@ export default function Guess(props) {
           onClick={() => props.submitGuess(props.id)}
         >
           Guess
-        </button></div>)}
+        </button>
+        <h5 className="warning">{props.error}</h5></div>)}
 
     
       {Object.keys(guesses).length != 0 && (
