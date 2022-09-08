@@ -1,7 +1,6 @@
 short term
 -CSS
 -implement messages if word is not accepted
--'enter' submits word
 -refactor code ->consider use of state
 fix console log warnings
 
@@ -9,3 +8,6 @@ long term
 -check against scrabble dictionary
 -save locally?
 -non-local play
+
+Keep checking
+-unccoment autoFocusing

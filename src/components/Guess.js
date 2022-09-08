@@ -5,6 +5,9 @@ export default function Guess(props) {
     const char = event.charCode;
     if (!(char >= 65 && char <= 90) && !(char >= 97 && char <= 122)) {
       event.preventDefault();
+      if(char==13){
+        props.submitGuess(props.id)
+      }
     }
   }
 

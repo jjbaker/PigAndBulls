@@ -39,7 +39,7 @@ export default function Rules(){
 
           </tbody>
           </table>
-      <p>The player to guess their opponents word in the least guesses wins.</p>
+      <p>The player to guess their opponents word in the least guesses wins(5 Bulls).</p>
     </div>
   )
 }

@@ -41,7 +41,8 @@ input{
   font-family: 'Arial', sans-serif;
 }
 table{
-  margin-left: 3px;
+  margin-left: auto;
+  margin-right: auto;
   margin-top: 15px;
   color: white;
 }
