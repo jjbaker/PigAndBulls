@@ -15,7 +15,7 @@ export default function Guess(props) {
   const guessBox = [];
   for (const prop in guesses) {
     guessBox.push(
-      <tr>
+      <tr key={prop}>
         <td>
           <input
             key={prop + props.id}

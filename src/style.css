@@ -26,6 +26,7 @@ html,body{
   border-radius: 10px;
   background-color: #303036;
   min-height: 25%;
+  min-width:300px;
   text-align: center;
   color:white;
 }

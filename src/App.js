@@ -152,13 +152,13 @@ export default function App() {
 
   const playerBoxes = players.map((p) => (
     <div
+      key={p.id}
       className="player--box"
       style={
         p.id === pTurn ? { border: "medium solid white" } : { border: "none" }
       }
     >
       <Word
-        key={p.id}
         error={errorMsg}
         id={p.id}
         pTurn={pTurn}
@@ -170,7 +170,6 @@ export default function App() {
       />
       {canGuess && (
         <Guess
-          key={p.id+"g"}
           error={errorMsg}
           won={p.won}
           pTurn={pTurn}
