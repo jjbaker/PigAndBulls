@@ -27,7 +27,7 @@ margin: 5px;
   min-height: 25%;
   text-align: center;
 }
-.word h2{
+h2,h3{
   color:white;
   text-align: center;
 }

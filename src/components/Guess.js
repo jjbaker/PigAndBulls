@@ -23,36 +23,32 @@ export default function Guess(props) {
   }
 
   const styles = {
-    visibility: props.pTurn == props.id ? "visible" : "hidden",
+    visibility: props.pTurn == props.id ? "visible" : "hidden"
   };
   
 
   return (
     <div className="guess">
       
-      {!props.won && <input
+      {!props.won && (<div style={styles}><h3>Guess your oponents word.</h3><input
         type="text"
         value={props.guess}
         maxLength="5"
-        style={styles}
         onKeyPress={(event) => lettersOnly(event)}
         onChange={(event) =>
           props.setWord("guess", event.target.value, props.id)
         }
         //autoFocus
-      />}
-
-      {!props.won && (
-        <button
-          style={styles}
+      />
+      <button
           className="button-31"
           type="button"
           onClick={() => props.submitGuess(props.id)}
         >
           Guess
-        </button>
-      )}
+        </button></div>)}
 
+    
       {Object.keys(guesses).length != 0 && (
         <table>
           <tbody  className={props.won ? "table--won":"table--"}>

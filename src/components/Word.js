@@ -13,10 +13,11 @@ export default function Word(props) {
       {props.msg && <h2>{props.msg}</h2>}
       {props.pTurn == props.id && !props.canGuess && (
         <div>
+          <h3>Enter a 5 letter word that is not a proper noun with no duplicate letters.</h3>
           <input
             type="text"
             value={props.word}
-            maxlength="5"
+            maxLength="5"
             onKeyPress={(event) => lettersOnly(event)}
             onChange={(event) =>
               props.setWord("word", event.target.value, props.id)
