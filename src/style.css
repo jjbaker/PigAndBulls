@@ -41,6 +41,7 @@ input{
   font-family: 'Arial', sans-serif;
 }
 table{
+  margin-left: 3px;
   margin-top: 15px;
   color: white;
 }
@@ -61,7 +62,7 @@ td input{
   color: white;
 }
 .center button{
-  border: medium white solid
+  border: thick white solid
 }
 
 

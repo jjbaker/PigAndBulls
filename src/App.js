@@ -138,11 +138,7 @@ export default function App() {
       )}
     </div>
   ));
-  /*React.useEffect(() =>{
-    players[0].word="qwert";
-    players[1].word="qwert";
-    setCanGuess(true);
-  },[])*/
+
   React.useEffect(()=>{
     const winners = players.filter(p => p.won===true).length;
     const message =  players.filter(p => p.victoryM.length>0).length;
