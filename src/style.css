@@ -3,7 +3,9 @@ html,body{
   margin: 0;
   background-color: #18181b;
   font-family: 'Verdana ', sans-serif;
+  
 }
+
 .split {
   display: flex;
   flex-direction: row;
@@ -21,7 +23,7 @@ html,body{
 .center{
   text-align: center;
 }
-.player--box{
+.playerbox{
   margin: 5px;
   border-radius: 10px;
   background-color: #303036;
@@ -29,6 +31,7 @@ html,body{
   min-width:300px;
   text-align: center;
   color:white;
+  position: relative;
 }
 .h2--victory{
   color: green
