@@ -1,9 +1,7 @@
 short term
 -CSS?
 -refactor code ->consider use of state
-
-long term
--check against scrabble dictionary
+-check words against scrabble dictionary
 -save locally?
 -non-local play
 
