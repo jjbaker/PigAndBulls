@@ -6,6 +6,12 @@ export default function PlayerBox(props) {
   const [errorMsg, setErrorMsg] = React.useState("");
   const [canGuess, setCanGuess] = React.useState(false);
 
+  async function checkWord(word) {
+    const url ="https://api.dictionaryapi.dev/api/v2/entries/en/"+word;
+    let response = await fetch(url);
+    let data = await response.json();
+    return data.title!="No Definitions Found";
+  }
   //only allows letter input to text box
   function lettersOnly(event) {
     const char = event.charCode;
@@ -17,7 +23,7 @@ export default function PlayerBox(props) {
     }
   }
   //checks word input to make sure rules are followed
-  function validateWord(word) {
+  async function validateWord(word) {
     if (word.length != 5) {
       setErrorMsg("Must be 5 letters");
       return false;
@@ -30,6 +36,12 @@ export default function PlayerBox(props) {
       setErrorMsg("No duplicate letters");
       return false;
     }
+    
+    if(!canGuess && !(await checkWord(word))){
+      setErrorMsg("Real words only");
+      return false;
+    }
+  
     setErrorMsg("");
     return true;
   }
@@ -51,12 +63,11 @@ export default function PlayerBox(props) {
     return [pigs, bulls];
   }
   //validates and submits player words and guesses
-  function submitWord() {
+  async function submitWord() {
     let word = !canGuess ? props.word : guess;
     word = word.toLowerCase();
     let pigsBulls;
-
-    if (validateWord(word)) {
+    if (await validateWord(word)) {
       if (!canGuess) {
         props.setPlayerWord(word)
         setCanGuess(true);
